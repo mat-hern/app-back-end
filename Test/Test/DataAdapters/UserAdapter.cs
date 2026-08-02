@@ -33,7 +33,7 @@ public class UserAdapter: Adapter<User>
         return newUser;
     }
 
-    public User GetUser(string email)
+    public User? GetUser(string email)
     {
         using var context = new ApplicationContext(this._configuration);
         User u = context.Users.FirstOrDefault(u => u.Username == email);

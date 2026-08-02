@@ -25,10 +25,12 @@ public class AuthentificationController: ControllerBase
     public IActionResult Login([FromBody] LoginRequest loginRequest)
     {
         User user =  adapter.GetUser(loginRequest.username);
-        
-        if (PasswordHasher.IsGoodPassword(loginRequest.password, user.Password))
+        if (user != null)
         {
-            return Ok(new  { Token = _auth.GenerateToken(60) });
+            if (PasswordHasher.IsGoodPassword(loginRequest.password, user.Password))
+            {
+                return Ok(new  { Token = _auth.GenerateToken(60) });
+            }   
         }
 
         return Unauthorized(new { Message = "Invalid username" });
